@@ -11,9 +11,9 @@ class Migration(SchemaMigration):
         # Adding model 'String'
         db.create_table('retranslate_string', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('original', self.gf('django.db.models.fields.TextField')(db_index=True)),
-            ('context', self.gf('django.db.models.fields.TextField')(db_index=True)),
-            ('translated', self.gf('django.db.models.fields.TextField')(db_index=True)),
+            ('original', self.gf('django.db.models.fields.CharField')(max_length=255, db_index=True)),
+            ('context', self.gf('django.db.models.fields.CharField')(max_length=255, db_index=True)),
+            ('translated', self.gf('django.db.models.fields.CharField')(max_length=255, db_index=True)),
             ('file', self.gf('django.db.models.fields.CharField')(db_index=True, max_length=255, blank=True)),
             ('location', self.gf('django.db.models.fields.CharField')(max_length=10, blank=True)),
             ('language', self.gf('django.db.models.fields.CharField')(max_length=2, blank=True)),
@@ -66,13 +66,13 @@ class Migration(SchemaMigration):
         },
         'retranslate.string': {
             'Meta': {'ordering': "('file', 'location')", 'object_name': 'String'},
-            'context': ('django.db.models.fields.TextField', [], {'db_index': 'True'}),
+            'context': ('django.db.models.fields.CharField', [], {'max_length': '255', 'db_index': 'True'}),
             'file': ('django.db.models.fields.CharField', [], {'db_index': 'True', 'max_length': '255', 'blank': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'language': ('django.db.models.fields.CharField', [], {'max_length': '2', 'blank': 'True'}),
             'location': ('django.db.models.fields.CharField', [], {'max_length': '10', 'blank': 'True'}),
-            'original': ('django.db.models.fields.TextField', [], {'db_index': 'True'}),
-            'translated': ('django.db.models.fields.TextField', [], {'db_index': 'True'}),
+            'original': ('django.db.models.fields.CharField', [], {'max_length': '255', 'db_index': 'True'}),
+            'translated': ('django.db.models.fields.CharField', [], {'max_length': '255', 'db_index': 'True'}),
             'translator': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.User']", 'null': 'True', 'blank': 'True'})
         }
     }
