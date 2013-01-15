@@ -18,11 +18,14 @@ _SEEN = {}
 
 
 def crawl_folder(path):
+    file_count = 0
     for folder, subfolders, files in os.walk('path'):
         for file_path in files:
             file_base, file_extension = os.path.splitext(file_path)
             if file_extension == 'py':
+                file_count += 1
                 extract_from_file(file_path)
+    return file_count
 
 def extract_from_file(file_path):
     with codecs.open(file_path, 'r', 'utf-8') as fh:
