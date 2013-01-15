@@ -11,38 +11,48 @@ import codecs
 from models import String
 
 
-U_LITERAL_RE = re.compile(r"u['\"](.*?)['\"]")
+U_LITERAL_RE = re.compile(r"u(['\"])(.*?)\1")
 _RESULT = [None, None]
 _LN = 1
 _SEEN = {}
 
 
-def crawl_folder(path):
+def crawl_folder(path, exclude=None):
     file_count = 0
-    for folder, subfolders, files in os.walk('path'):
+    for folder, subfolders, files in os.walk(path):
         for file_path in files:
             file_base, file_extension = os.path.splitext(file_path)
-            if file_extension == 'py':
-                file_count += 1
-                extract_from_file(file_path)
+            if file_extension == '.py':
+                full_file_path = os.path.join(folder, file_path)
+                exclude_this = False
+                if exclude:
+                    for name in exclude:
+                        if full_file_path.find(name) > 0:
+                            exclude_this = True
+                            break
+                if not exclude_this:
+                    file_count += 1
+                    extract_from_file(full_file_path)
     return file_count
 
 def extract_from_file(file_path):
     with codecs.open(file_path, 'r', 'utf-8') as fh:
         ln = 0
         for line in fh:
+            ln += 1
             for match in U_LITERAL_RE.finditer(line):
                 handle_token(match, file_path, ln)
-        ln += 1
 
 def handle_token(match, file_path, line):
     try:
         string_obj = String.objects.get(original=match.group())
     except String.DoesNotExist:
-        location = ':'.join([line, match.start()])
-        string_obj = String(file=file_path, location=location, original=match.group(),
+        location = ':'.join([str(line), str(match.start())])
+        string_obj = String(file=file_path, location=location, original=match.group(2),
             context=match.string)
         string_obj.save()
+
+### FIXME: Below lies unusable ATM code
 
 def string_replace(matchobj):
     original = matchobj.group(1)
@@ -56,7 +66,7 @@ def string_replace(matchobj):
     _SEEN[original] = "_('{}')".format(substitute)
     return _SEEN[original]
 
-if __name__ == '__main__':
+if __name__ == '__zzmainzz__':
     file_path = sys.argv[1]
     file_name = os.path.basename(file_path)
     file_dir = os.path.dirname(file_path)
