@@ -1,0 +1,3 @@
+# Retranslate
+
+Django tool for translating cyrillic strings found in source code back to english.
