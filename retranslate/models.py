@@ -14,6 +14,7 @@ class String(models.Model):
     )
 
     original = models.TextField(_('original string'), db_index=True)
+    context = models.TextField(_('context'), db_index=True)
     translated = models.TextField(_('translated string'), db_index=True)
     file = models.CharField(_('occurs in file'), max_length=255, blank=True, db_index=True)
     location = models.CharField(_('file location'), max_length=10, blank=True)
