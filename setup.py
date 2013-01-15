@@ -27,5 +27,5 @@ setup(
         'Programming Language :: Python',
         'Topic :: Software Development :: Libraries :: Python Modules'
     ),
-    install_requires=['Django>=1.3']
+    install_requires=['Django>=1.3', 'polib==1.0.2']
 )
