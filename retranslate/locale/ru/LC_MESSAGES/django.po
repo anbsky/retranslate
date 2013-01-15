@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-15 22:17+0400\n"
+"POT-Creation-Date: 2013-01-15 22:31+0400\n"
 "PO-Revision-Date: 2013-01-15 18:46+0400\n"
 "Last-Translator: ANDREY BELETSKY <andrey@vr2.net>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -58,10 +58,22 @@ msgstr "переводчик"
 msgid "translated?"
 msgstr "переведена?"
 
-#: models.py:50
+#: models.py:24
+msgid "ignore?"
+msgstr "игнорировать?"
+
+#: models.py:38
+msgid "row"
+msgstr "ряд"
+
+#: models.py:46
+msgid "col"
+msgstr "кол"
+
+#: models.py:53
 msgid "string"
 msgstr "строка"
 
-#: models.py:51
+#: models.py:54
 msgid "strings"
 msgstr "строки"

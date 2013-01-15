@@ -12,7 +12,7 @@ from models import String
 
 
 U_LITERAL_RE = re.compile(r"u(['\"])(.*?)\1")
-IGNORE_STRINGS = ['{}', '{0}', '%s']
+IGNORE_STRINGS = ['{}', '{0}', '%s', '{0} {1}', '%s %s', '\n']
 
 def crawl_folder(path, exclude=None):
     file_count = 0

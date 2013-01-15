@@ -18,9 +18,10 @@ class StringAdminForm(forms.ModelForm):
 
 
 class StringAdmin(admin.ModelAdmin):
-    list_display = ('id', 'original', 'translation', 'file', 'location_row',
-                    'location_col', 'translator')
-    list_filter = ('language', 'is_translated')
+    list_display = ('id', 'is_ignored', 'original', 'translation', 'file',
+                    'location_row', 'location_col', 'translator')
+    list_editable = ('is_ignored',)
+    list_filter = ('language', 'is_translated', 'is_ignored')
     search_fields = ('original', 'translated', 'file')
     readonly_fields = ('context', 'translator',)
     form = StringAdminForm

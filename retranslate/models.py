@@ -21,6 +21,7 @@ class String(models.Model):
     language = models.CharField(_('language'), max_length=2, blank=True, choices=LANGUAGES)
     translator = models.ForeignKey(User, verbose_name=_('translator'), blank=True, null=True)
     is_translated = models.BooleanField(_('translated?'), default=False)
+    is_ignored = models.BooleanField(_('ignore?'), default=False)
 
     def __unicode__(self):
         return u'{}...'.format(self.original[:25])
@@ -34,6 +35,7 @@ class String(models.Model):
                 return int(self.location.split(':')[0])
         except (ValueError, IndexError):
             return None
+    location_row.short_description = _('row')
 
     def location_col(self):
         try:
@@ -41,6 +43,7 @@ class String(models.Model):
                 return int(self.location.split(':')[1])
         except (ValueError, IndexError):
             return None
+    location_col.short_description = _('col')
 
     def save(self, *args, **kwargs):
         self.is_translated = bool(self.translation)
