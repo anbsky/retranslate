@@ -12,10 +12,7 @@ from models import String
 
 
 U_LITERAL_RE = re.compile(r"u(['\"])(.*?)\1")
-_RESULT = [None, None]
-_LN = 1
-_SEEN = {}
-
+IGNORE_STRINGS = ['{}', '{0}', '%s']
 
 def crawl_folder(path, exclude=None):
     file_count = 0
@@ -44,11 +41,15 @@ def extract_from_file(file_path):
                 handle_token(match, file_path, ln)
 
 def handle_token(match, file_path, line):
+    extracted = match.group(2)
     try:
-        string_obj = String.objects.get(original=match.group())
+        string_obj = String.objects.get(original=extracted)
     except String.DoesNotExist:
+        # Ignoring empty lines
+        if not extracted or extracted in IGNORE_STRINGS:
+            return
         location = ':'.join([str(line), str(match.start())])
-        string_obj = String(file=file_path, location=location, original=match.group(2),
+        string_obj = String(file=file_path, location=location, original=extracted,
             context=match.string)
         string_obj.save()
 
