@@ -13,9 +13,9 @@ class String(models.Model):
         ('EN', _('English')),
     )
 
-    original = models.TextField(_('original string'), db_index=True)
-    context = models.TextField(_('context'), db_index=True)
-    translated = models.TextField(_('translated string'), db_index=True)
+    original = models.TextField(_('original string'), db_index=True, max_length=512)
+    context = models.TextField(_('context'), db_index=True, max_length=512)
+    translated = models.TextField(_('translated string'), db_index=True, max_length=512)
     file = models.CharField(_('occurs in file'), max_length=255, blank=True, db_index=True)
     location = models.CharField(_('file location'), max_length=10, blank=True)
     language = models.CharField(_('language'), max_length=2, blank=True, choices=LANGUAGES)
