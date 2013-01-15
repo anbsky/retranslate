@@ -10,7 +10,7 @@ from models import String
 class StringAdmin(admin.ModelAdmin):
     list_display = ('original', 'translated', 'file', 'location_row',
                     'location_col', 'translator')
-    list_filter = ('translator', 'language',)
+    list_filter = ('language',)
     search_fields = ('original', 'translated', 'file')
 
     def save_model(self, request, obj, form, change):
