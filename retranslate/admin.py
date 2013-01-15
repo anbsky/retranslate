@@ -3,15 +3,27 @@
 from __future__ import print_function
 
 from django.contrib import admin
+from django import forms
 
 from models import String
 
 
+class StringAdminForm(forms.ModelForm):
+    class Meta:
+        model = String
+        widgets = {
+            'original': forms.Textarea(attrs={'cols': 100}),
+            'translated': forms.Textarea(attrs={'cols': 100}),
+        }
+
+
 class StringAdmin(admin.ModelAdmin):
-    list_display = ('original', 'translated', 'file', 'location_row',
+    list_display = ('id', 'original', 'translation', 'file', 'location_row',
                     'location_col', 'translator')
-    list_filter = ('language',)
+    list_filter = ('language', 'is_translated')
     search_fields = ('original', 'translated', 'file')
+    readonly_fields = ('context', 'translator',)
+    form = StringAdminForm
 
     def save_model(self, request, obj, form, change):
         obj.set_translator(request)
