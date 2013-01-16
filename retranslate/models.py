@@ -5,6 +5,7 @@ from __future__ import print_function
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User
+from _mysql_exceptions import Warning
 
 
 class String(models.Model):
@@ -13,15 +14,15 @@ class String(models.Model):
         ('EN', _('English')),
     )
 
-    original = models.CharField(_('original string'), db_index=True, max_length=255)
-    context = models.CharField(_('context'), db_index=True, max_length=255)
-    translation = models.CharField(_('translated string'), db_index=True, max_length=255, blank=True)
+    original = models.CharField(_('original string'), max_length=1000)
+    context = models.CharField(_('context'), max_length=1000)
+    translation = models.CharField(_('translated string'), max_length=1000, blank=True)
     file = models.CharField(_('occurs in file'), max_length=255, blank=True, db_index=True)
     location = models.CharField(_('file location'), max_length=10, blank=True)
-    language = models.CharField(_('language'), max_length=2, blank=True, choices=LANGUAGES)
+    language = models.CharField(_('language'), max_length=2, blank=True, choices=LANGUAGES, db_index=True)
     translator = models.ForeignKey(User, verbose_name=_('translator'), blank=True, null=True)
-    is_translated = models.BooleanField(_('translated?'), default=False)
-    is_ignored = models.BooleanField(_('ignore?'), default=False)
+    is_translated = models.BooleanField(_('translated?'), default=False, db_index=True)
+    is_ignored = models.BooleanField(_('ignore?'), default=False, db_index=True)
 
     def __unicode__(self):
         return u'{}...'.format(self.original[:25])
@@ -46,8 +47,14 @@ class String(models.Model):
     location_col.short_description = _('col')
 
     def save(self, *args, **kwargs):
+        self.context = unicode(self.context)
+        if len(self.context) > 1000:
+            self.context = self.context[:498] + '...'
         self.is_translated = bool(self.translation)
-        super(String, self).save(*args, **kwargs)
+        try:
+            super(String, self).save(*args, **kwargs)
+        except Warning:
+            pass
 
     class Meta:
         verbose_name = _('string')
