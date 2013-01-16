@@ -22,7 +22,7 @@ class StringAdmin(admin.ModelAdmin):
                     'location_row', 'location_col', 'translator')
     list_editable = ('is_ignored',)
     list_filter = ('language', 'is_translated', 'is_ignored')
-    search_fields = ('original', 'translated', 'file')
+    search_fields = ('file',)
     readonly_fields = ('context', 'translator',)
     form = StringAdminForm
 
