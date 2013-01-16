@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-15 22:31+0400\n"
+"POT-Creation-Date: 2013-01-16 16:40+0400\n"
 "PO-Revision-Date: 2013-01-15 18:46+0400\n"
 "Last-Translator: ANDREY BELETSKY <andrey@vr2.net>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,62 +18,67 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2)\n"
 
-#: models.py:12
+#: models.py:13
 msgid "Russian"
 msgstr "русский"
 
-#: models.py:13
+#: models.py:14
 msgid "English"
 msgstr "английский"
 
-#: models.py:16
+#: models.py:17
 msgid "original string"
 msgstr "оригинальная строка"
 
-#: models.py:17
+#: models.py:18
 msgid "context"
 msgstr "контекст"
 
-#: models.py:18
+#: models.py:19
 msgid "translated string"
 msgstr "переведенная строка"
 
-#: models.py:19
+#: models.py:20
 msgid "occurs in file"
 msgstr "найдена в файле"
 
-#: models.py:20
+#: models.py:21
 msgid "file location"
 msgstr "место в файле"
 
-#: models.py:21
+#: models.py:22
 msgid "language"
 msgstr "язык"
 
-#: models.py:22
+#: models.py:23
 msgid "translator"
 msgstr "переводчик"
 
-#: models.py:23
+#: models.py:24
 msgid "translated?"
 msgstr "переведена?"
 
-#: models.py:24
+#: models.py:25
 msgid "ignore?"
 msgstr "игнорировать?"
 
-#: models.py:38
+#: models.py:26
+msgid ""
+"ignore this string, useful if extracted string content doesn't make sense"
+msgstr "игнорировать строку (полезно, если содержимое выглядит как мусор)"
+
+#: models.py:40
 msgid "row"
 msgstr "ряд"
 
-#: models.py:46
+#: models.py:48
 msgid "col"
 msgstr "кол"
 
-#: models.py:53
+#: models.py:61
 msgid "string"
 msgstr "строка"
 
-#: models.py:54
+#: models.py:62
 msgid "strings"
 msgstr "строки"

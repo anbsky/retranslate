@@ -15,14 +15,15 @@ class String(models.Model):
     )
 
     original = models.CharField(_('original string'), max_length=1000)
-    context = models.CharField(_('context'), max_length=1000)
+    context = models.CharField(_('context'), max_length=5000)
     translation = models.CharField(_('translated string'), max_length=1000, blank=True)
     file = models.CharField(_('occurs in file'), max_length=255, blank=True, db_index=True)
     location = models.CharField(_('file location'), max_length=10, blank=True)
     language = models.CharField(_('language'), max_length=2, blank=True, choices=LANGUAGES, db_index=True)
     translator = models.ForeignKey(User, verbose_name=_('translator'), blank=True, null=True)
     is_translated = models.BooleanField(_('translated?'), default=False, db_index=True)
-    is_ignored = models.BooleanField(_('ignore?'), default=False, db_index=True)
+    is_ignored = models.BooleanField(_('ignore?'), default=False, db_index=True,
+        help_text=_('ignore this string, useful if extracted string content doesn\'t make sense'))
 
     def __unicode__(self):
         return u'{}...'.format(self.original[:25])
