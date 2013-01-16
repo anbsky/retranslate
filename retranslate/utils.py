@@ -8,13 +8,13 @@ import sys, os
 import re
 import codecs
 
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup, element
 
 from models import String
 
 
 U_LITERAL_RE = re.compile(r"u(['\"])(.*?)\1")
-IGNORE_STRINGS = '{}', '{0}', '%s', '{0} {1}', '%s %s', '\n'
+IGNORE_STRINGS = '{}', '{0}', '%s', '{0} {1}', '%s %s', '\n', '*', ':', ','
 IGNORE_TAGS = 'style', 'script', 'noscript', '[document]', 'head'
 IGNORE_NODES_RE = re.compile(r'(?:{([%#]).+?\1})|(?:{{.+?}})')
 
@@ -48,7 +48,6 @@ def extract_from_html(file_path):
         soup = BeautifulSoup(fh.read())
 
         for node in filter(visible, soup.findAll(text=True)):
-            node.rstrip()
             handle_node(node, file_path)
 
         for node in soup.findAll():
@@ -90,9 +89,10 @@ def handle_match(match, file_path, line):
     save_string(extracted, match.string, file_path, location)
 
 def handle_node(node, file_path):
-    extracted = node
-    # Ignoring empty lines
-    if not extracted or IGNORE_NODES_RE.search(extracted):
+    if isinstance(node, element.Comment):
+        return
+    extracted = IGNORE_NODES_RE.sub('', node).strip()
+    if not extracted or extracted in IGNORE_STRINGS:
         return
     save_string(extracted, node.parent, file_path)
 
