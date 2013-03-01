@@ -5,7 +5,6 @@ from __future__ import print_function
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User
-from _mysql_exceptions import Warning
 
 
 class String(models.Model):
@@ -52,10 +51,7 @@ class String(models.Model):
         if len(self.context) > 1000:
             self.context = self.context[:498] + '...'
         self.is_translated = bool(self.translation)
-        try:
-            super(String, self).save(*args, **kwargs)
-        except Warning:
-            pass
+        super(String, self).save(*args, **kwargs)
 
     class Meta:
         verbose_name = _('string')
