@@ -15,7 +15,6 @@ setup(
         'retranslate'
     ],
     url='http://www.vr2.net',
-    download_url = 'https://github.com/satels/django-qiwi/zipball/master',
     license = 'MIT license',
     description = 'A django app to translate non-english strings found in source code to english',
     classifiers=(
